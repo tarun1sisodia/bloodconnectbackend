@@ -31,7 +31,7 @@ app.use(express.json());
 //   credentials: true
 // }));
 app.use(cors({
-  origin: ['https://bloodconnecttarun.netlify.app', 'https://tarun1sisodia.github.io/bloodconnectfrontend'],
+  origin: ['https://tarun1sisodia.netlify.app', 'https://tarun1sisodia.github.io/bloodconnectfrontend'],
   credentials: true
 }));
 
