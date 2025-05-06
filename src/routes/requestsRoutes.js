@@ -16,6 +16,10 @@ router.get('/', requestController.getAllRequests);
 router.get('/:id', requestController.getRequestById);
 
 // Get requests by current user
+// router.get('/me', auth, requestController.getRequestsByUser);
+
+
+// Get requests by current user
 router.get('/user/me', auth, requestController.getMyRequests);
 
 // Update request

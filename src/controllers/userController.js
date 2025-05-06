@@ -83,7 +83,7 @@ const getDonors = async (req, res) => {
     }
     
     // Find donors with at least one donation
-    query.donationCount = { $gt: 0 };
+    // query.donationCount = { $gt: 0 };
     
     const donors = await User.find(query)
       .select('name bloodType location donationCount lastDonation profilePicture')

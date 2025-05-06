@@ -59,7 +59,8 @@ if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
     // Only redirect requests that aren't for the API or health check
     if (!req.path.startsWith('/api/') && req.path !== '/health') {
-      const githubPagesUrl = process.env.FRONTEND_URL || 'https://tarun9105.github.io/ProjectUI/'|| 'https://tarun9105.github.io';
+      // const githubPagesUrl = process.env.FRONTEND_URL || 'https://tarun9105.github.io/ProjectUI/'|| 'https://tarun9105.github.io';
+      const githubPagesUrl = process.env.FRONTEND_URL || 'https://tarun1sisodia.github.io/bloodconnectfrontend/'|| 'https://tarun1sisodia.github.io';
       // Remove trailing slash if it exists to avoid double slashes
       const baseUrl = githubPagesUrl.endsWith('/') ? githubPagesUrl.slice(0, -1) : githubPagesUrl;
       res.redirect(`${baseUrl}${req.path}`);
