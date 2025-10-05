@@ -3,6 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
+//This commit is directly done on github using web. need to install helmet package npm i helmet.
+const helmet = require('helmet');
 
 // Import routes
 const authRoutes = require('./routes/authRoutes');
@@ -19,7 +21,7 @@ const { apiLimiter } = require('./middleware/rateLimit');
 
 // Initialize Express app
 const app = express();
-
+app.use(helmet()); //it just basics but far better than nothing.
 // Add this line right after initializing the app
 app.set('trust proxy', 1);
 
