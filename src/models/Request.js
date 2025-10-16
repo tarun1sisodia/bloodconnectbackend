@@ -106,6 +106,20 @@ const requestSchema = new Schema({
     default: Date.now
   }
 }, { timestamps: true });
+// Helper to compute compatible donor blood types for this request
+requestSchema.methods.getCompatibleBloodTypes = function() {
+  const compatibilityChart = {
+    'A+': ['A+', 'A-', 'O+', 'O-'],
+    'A-': ['A-', 'O-'],
+    'B+': ['B+', 'B-', 'O+', 'O-'],
+    'B-': ['B-', 'O-'],
+    'AB+': ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
+    'AB-': ['A-', 'B-', 'AB-', 'O-'],
+    'O+': ['O+', 'O-'],
+    'O-': ['O-']
+  };
+  return compatibilityChart[this.patient?.bloodType] || [];
+};
 
 // Index for geospatial queries
 requestSchema.index({ 'hospital.coordinates': '2dsphere' });

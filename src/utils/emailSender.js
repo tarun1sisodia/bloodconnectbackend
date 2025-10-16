@@ -150,3 +150,30 @@ module.exports = {
   sendDonorMatchEmail,
   sendDonationConfirmationEmail
 };
+
+// Notify requester when a donor volunteers
+async function sendRequesterNotificationEmail(requester, donor, request) {
+  try {
+    await transporter.sendMail({
+      from: `"BloodConnect" <${process.env.EMAIL_FROM}>`,
+      to: requester.email,
+      subject: 'A donor has volunteered for your request',
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+          <h2 style="color: #e53e3e;">Good news! A donor has volunteered</h2>
+          <p>Hello ${requester.name},</p>
+          <p>${donor.name} has volunteered to donate for your request.</p>
+          <p><strong>Request:</strong> ${request.patient?.bloodType} at ${request.hospital?.name}, ${request.hospital?.city}</p>
+          <p>We will keep you updated on the progress.</p>
+          <p>Best regards,<br>The BloodConnect Team</p>
+        </div>
+      `
+    });
+    return true;
+  } catch (error) {
+    console.error('Error sending requester notification email:', error);
+    return false;
+  }
+}
+
+module.exports.sendRequesterNotificationEmail = sendRequesterNotificationEmail;

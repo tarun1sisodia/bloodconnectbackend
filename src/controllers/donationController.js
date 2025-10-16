@@ -15,7 +15,7 @@ const createDonation = async (req, res) => {
     
     // Check if user is eligible to donate
     const user = req.user;
-    const isEligible = user.checkEligibility();
+    const isEligible = typeof user.isEligibleToDonate === 'function' ? user.isEligibleToDonate() : true;
     
     if (!isEligible) {
       return res.status(400).json({

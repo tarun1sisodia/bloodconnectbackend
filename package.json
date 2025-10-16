@@ -15,6 +15,7 @@
     "express-rate-limit": "^6.7.0",
     "express-validator": "^7.0.1",
     "gsap": "^3.12.7",
+    "helmet": "^7.2.0",
     "highlight.js": "^11.11.1",
     "i": "^0.3.7",
     "mongodb": "^6.15.0",

@@ -70,14 +70,14 @@ const volunteerForRequest = async (req, res) => {
       return res.status(404).json({ message: 'Request not found' });
     }
     
-    // Check if request is still open or in progress
-    if (!['open', 'in-progress'].includes(request.status)) {
+    // Check if request is still accepting donors
+    if (!['pending', 'in-progress'].includes(request.status)) {
       return res.status(400).json({ message: 'This request is no longer accepting donors' });
     }
     
     // Check if user is eligible to donate
     const user = req.user;
-    const isEligible = user.checkEligibility();
+    const isEligible = typeof user.isEligibleToDonate === 'function' ? user.isEligibleToDonate() : true;
     
     if (!isEligible) {
       return res.status(400).json({
@@ -89,7 +89,7 @@ const volunteerForRequest = async (req, res) => {
     const compatibleBloodTypes = request.getCompatibleBloodTypes();
     if (!compatibleBloodTypes.includes(user.bloodType)) {
       return res.status(400).json({
-        message: `Your blood type (${user.bloodType}) is not compatible with the requested blood type (${request.bloodType})`
+        message: `Your blood type (${user.bloodType}) is not compatible with the requested blood type (${request.patient?.bloodType})`
       });
     }
     
@@ -100,7 +100,9 @@ const volunteerForRequest = async (req, res) => {
     const requester = await User.findById(request.requester);
     
     // Send notification to requester
-    await sendRequesterNotificationEmail(requester, user, request);
+    if (typeof sendRequesterNotificationEmail === 'function') {
+      await sendRequesterNotificationEmail(requester, user, request);
+    }
     
     res.status(200).json({
       message: 'You have successfully volunteered for this request',
