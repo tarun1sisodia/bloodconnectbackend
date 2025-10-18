@@ -1,14 +1,14 @@
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
 // Create reusable transporter
 const transporter = nodemailer.createTransport({
   host: process.env.EMAIL_HOST,
   port: process.env.EMAIL_PORT,
-  secure: process.env.EMAIL_SECURE === 'true',
+  secure: process.env.EMAIL_SECURE === "true",
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
-  }
+    pass: process.env.EMAIL_PASS,
+  },
 });
 
 // Send welcome email
@@ -17,7 +17,7 @@ const sendWelcomeEmail = async (user) => {
     await transporter.sendMail({
       from: `"BloodConnect" <${process.env.EMAIL_FROM}>`,
       to: user.email,
-      subject: 'Welcome to BloodConnect',
+      subject: "Welcome to BloodConnect",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #e53e3e;">Welcome to BloodConnect!</h2>
@@ -33,13 +33,13 @@ const sendWelcomeEmail = async (user) => {
           <p>If you have any questions, feel free to reply to this email.</p>
           <p>Best regards,<br>The BloodConnect Team</p>
         </div>
-      `
+      `,
     });
-    
+
     console.log(`Welcome email sent to ${user.email}`);
     return true;
   } catch (error) {
-    console.error('Error sending welcome email:', error);
+    console.error("Error sending welcome email:", error);
     return false;
   }
 };
@@ -50,7 +50,7 @@ const sendRequestConfirmationEmail = async (user, request) => {
     await transporter.sendMail({
       from: `"BloodConnect" <${process.env.EMAIL_FROM}>`,
       to: user.email,
-      subject: 'Blood Request Confirmation',
+      subject: "Blood Request Confirmation",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #e53e3e;">Blood Request Confirmation</h2>
@@ -67,13 +67,13 @@ const sendRequestConfirmationEmail = async (user, request) => {
           <p>We will notify you when donors are matched with your request.</p>
           <p>Best regards,<br>The BloodConnect Team</p>
         </div>
-      `
+      `,
     });
-    
+
     console.log(`Request confirmation email sent to ${user.email}`);
     return true;
   } catch (error) {
-    console.error('Error sending request confirmation email:', error);
+    console.error("Error sending request confirmation email:", error);
     return false;
   }
 };
@@ -84,7 +84,7 @@ const sendDonorMatchEmail = async (donor, request) => {
     await transporter.sendMail({
       from: `"BloodConnect" <${process.env.EMAIL_FROM}>`,
       to: donor.email,
-      subject: 'Blood Donation Request Match',
+      subject: "Blood Donation Request Match",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #e53e3e;">Blood Donation Match Found</h2>
@@ -100,13 +100,13 @@ const sendDonorMatchEmail = async (donor, request) => {
           <p>Your donation can save a life!</p>
           <p>Best regards,<br>The BloodConnect Team</p>
         </div>
-      `
+      `,
     });
-    
+
     console.log(`Donor match email sent to ${donor.email}`);
     return true;
   } catch (error) {
-    console.error('Error sending donor match email:', error);
+    console.error("Error sending donor match email:", error);
     return false;
   }
 };
@@ -117,7 +117,7 @@ const sendDonationConfirmationEmail = async (donor, donation) => {
     await transporter.sendMail({
       from: `"BloodConnect" <${process.env.EMAIL_FROM}>`,
       to: donor.email,
-      subject: 'Thank You for Your Blood Donation',
+      subject: "Thank You for Your Blood Donation",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #e53e3e;">Thank You for Your Donation!</h2>
@@ -125,21 +125,25 @@ const sendDonationConfirmationEmail = async (donor, donation) => {
           <p>Thank you for your recent blood donation. Your generosity helps save lives!</p>
           <p><strong>Donation Details:</strong></p>
           <ul>
-            <li>Date: ${new Date(donation.donationDate).toLocaleDateString()}</li>
+            <li>Date: ${new Date(
+              donation.donationDate
+            ).toLocaleDateString()}</li>
             <li>Blood Type: ${donation.bloodType}</li>
             <li>Units: ${donation.units}</li>
-            <li>Hospital: ${donation.hospital.name}, ${donation.hospital.city}</li>
+            <li>Hospital: ${donation.hospital.name}, ${
+        donation.hospital.city
+      }</li>
           </ul>
           <p>Your donation count has been updated in your profile.</p>
           <p>Best regards,<br>The BloodConnect Team</p>
         </div>
-      `
+      `,
     });
-    
+
     console.log(`Donation confirmation email sent to ${donor.email}`);
     return true;
   } catch (error) {
-    console.error('Error sending donation confirmation email:', error);
+    console.error("Error sending donation confirmation email:", error);
     return false;
   }
 };
@@ -148,7 +152,7 @@ module.exports = {
   sendWelcomeEmail,
   sendRequestConfirmationEmail,
   sendDonorMatchEmail,
-  sendDonationConfirmationEmail
+  sendDonationConfirmationEmail,
 };
 
 // Notify requester when a donor volunteers
@@ -157,7 +161,7 @@ async function sendRequesterNotificationEmail(requester, donor, request) {
     await transporter.sendMail({
       from: `"BloodConnect" <${process.env.EMAIL_FROM}>`,
       to: requester.email,
-      subject: 'A donor has volunteered for your request',
+      subject: "A donor has volunteered for your request",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <h2 style="color: #e53e3e;">Good news! A donor has volunteered</h2>
@@ -167,11 +171,11 @@ async function sendRequesterNotificationEmail(requester, donor, request) {
           <p>We will keep you updated on the progress.</p>
           <p>Best regards,<br>The BloodConnect Team</p>
         </div>
-      `
+      `,
     });
     return true;
   } catch (error) {
-    console.error('Error sending requester notification email:', error);
+    console.error("Error sending requester notification email:", error);
     return false;
   }
 }
