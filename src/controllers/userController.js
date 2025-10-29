@@ -1,5 +1,5 @@
-const User = require('../models/User');
-const Donation = require('../models/Donation');
+import { User } from '../models/User.js';
+import { Donation } from '../models/Donation.js';
 
 // Get current user profile
 const getProfile = async (req, res) => {
@@ -115,7 +115,7 @@ const getUserById = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getProfile,
   updateProfile,
   getDonors,

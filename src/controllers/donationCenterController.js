@@ -1,9 +1,9 @@
-const DonationCenter = require('../models/DonationCenter');
-const Appointment = require('../models/Appointment');
-const User = require('../models/User');
+import { DonationCenter } from '../models/DonationCenter.js';
+import { Appointment } from '../models/Appointment.js';
+import { User } from '../models/User.js';
 
 // Get all donation centers
-exports.getAllCenters = async (req, res) => {
+ const getAllCenters = async (req, res) => {
   try {
     const { city, state, date, timeSlot } = req.query;
     
@@ -50,7 +50,7 @@ exports.getAllCenters = async (req, res) => {
 };
 
 // Get donation centers near user
-exports.getNearbyDonationCenters = async (req, res) => {
+ const getNearbyDonationCenters = async (req, res) => {
   try {
     // Get user's location from their profile
     if (!req.user || !req.user.location || !req.user.location.coordinates) {
@@ -74,7 +74,7 @@ exports.getNearbyDonationCenters = async (req, res) => {
 };
 
 // Get a single donation center by ID
-exports.getDonationCenterById = async (req, res) => {
+ const getDonationCenterById = async (req, res) => {
   try {
     const center = await DonationCenter.findById(req.params.id);
     
@@ -93,7 +93,7 @@ exports.getDonationCenterById = async (req, res) => {
 };
 
 // Book an appointment
-exports.bookAppointment = async (req, res) => {
+ const bookAppointment = async (req, res) => {
   try {
     const { donationCenter: centerId, date, timeSlot } = req.body;
     
@@ -164,7 +164,7 @@ exports.bookAppointment = async (req, res) => {
 };
 
 // Get user's appointments
-exports.getUserAppointments = async (req, res) => {
+ const getUserAppointments = async (req, res) => {
   try {
     const appointments = await Appointment.find({ user: req.user._id })
       .populate('donationCenter', 'name address city state phone')
@@ -194,7 +194,7 @@ exports.getUserAppointments = async (req, res) => {
 };
 
 // Cancel an appointment
-exports.cancelAppointment = async (req, res) => {
+const cancelAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
     
@@ -242,7 +242,7 @@ exports.cancelAppointment = async (req, res) => {
 };
 
 // Complete an appointment (admin only)
-exports.completeAppointment = async (req, res) => {
+const completeAppointment = async (req, res) => {
   try {
     const appointment = await Appointment.findById(req.params.id);
     
@@ -368,7 +368,7 @@ function getTimeRangeForSlot(timeSlot) {
   }
 }
 // Get all cities with donation centers
-exports.getAllCities = async (req, res) => {
+const getAllCities = async (req, res) => {
     try {
       // Find all unique cities with active donation centers
       const cities = await DonationCenter.distinct('city', { isActive: true });
@@ -381,7 +381,7 @@ exports.getAllCities = async (req, res) => {
   };
   
   // Get available slots for a specific donation center and date
-  exports.getAvailableSlots = async (req, res) => {
+  const getAvailableSlots = async (req, res) => {
     try {
       const { id } = req.params;
       const { date } = req.query;
@@ -411,4 +411,4 @@ exports.getAllCities = async (req, res) => {
   };
   
 
-module.exports = exports;
+export { getAllCenters, getNearbyDonationCenters, getDonationCenterById, bookAppointment, getUserAppointments, cancelAppointment, completeAppointment, getAllCities, getAvailableSlots };

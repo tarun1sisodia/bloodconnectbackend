@@ -1,6 +1,6 @@
-const Request = require('../models/Request');
-const User = require('../models/User');
-const { sendRequestConfirmationEmail } = require('../utils/emailSender');
+import { Request } from '../models/Request.js';
+import { User } from '../models/User.js';
+import { sendRequestConfirmationEmail } from '../utils/emailSender.js';
 
 // Create a new blood request
 const createRequest = async (req, res) => {
@@ -196,7 +196,7 @@ const deleteRequest = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   createRequest,
   getAllRequests,
   getRequestById,

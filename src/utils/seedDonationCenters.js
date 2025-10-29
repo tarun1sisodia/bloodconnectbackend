@@ -1,7 +1,13 @@
-const mongoose = require('mongoose');
-const DonationCenter = require('../models/DonationCenter');
-const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../../.env') });
+import mongoose from 'mongoose';
+import { DonationCenter } from '../models/DonationCenter.js';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 // Check if MongoDB URI is available
 const mongoURI = process.env.MONGODB_URI;

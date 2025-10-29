@@ -1,6 +1,10 @@
-const { createClient } = require('@supabase/supabase-js');
-const path = require('path');
-const dotenv = require('dotenv');
+import { createClient } from '@supabase/supabase-js';
+import path from 'path';
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables from the backend/.env file
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
@@ -75,7 +79,7 @@ const resetPassword = async (email) => {
   }
 };
 
-module.exports = {
+export {
   supabase,
   registerUser,
   loginUser,

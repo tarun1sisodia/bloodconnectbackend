@@ -1,7 +1,7 @@
-const { supabase } = require('../utils/supabase');
+import { supabase } from '../utils/supabase.js';
 
 // Submit contact form
-exports.createContact = async (req, res) => {
+export const createContact = async (req, res) => {
     try {
         // Ensure user is authenticated (this is already handled by auth middleware)
         const { name, email, subject, message } = req.body;
