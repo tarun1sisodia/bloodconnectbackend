@@ -1,8 +1,7 @@
-import encryptionUtils from "../utils/encryption";
+import encryptionUtils from "../utils/encryption.js";
 import mongoose from "mongoose";
-const Schema = mongoose.Schema;
 
-const userSchema = new Schema(
+const userSchema = new mongoose.Schema(
   {
     supabaseId: {
       type: String,
@@ -17,11 +16,11 @@ const userSchema = new Schema(
       trim: true,
     },
     name: {
-      type: Object,
+      type: String,
       required: true,
     },
     phone: {
-      type: Object,
+      type: Number,
     },
     bloodType: {
       type: String,
@@ -200,4 +199,3 @@ userSchema.statics.findCompatibleDonors = function (
 };
 
 export const User = mongoose.model("User", userSchema);
-

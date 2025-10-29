@@ -1,4 +1,4 @@
-import encryptionUtils from "../utils/encryption";
+import encryptionUtils from "../utils/encryption.js";
 import mongoose from "mongoose";
 
 const Schema = mongoose.Schema;

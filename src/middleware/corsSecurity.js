@@ -129,9 +129,10 @@ class CORSecurity {
   }
 
   // Rate limiting for specific origins
-  static createOriginRateLimit() {
-    import('express-rate-limit').then(({ default: rateLimit }) => {
-      return rateLimit({
+  static async createOriginRateLimit() {
+    const { default: rateLimit } = await import('express-rate-limit');
+    
+    return rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: (req) => {
         const origin = req.get("Origin");
@@ -251,11 +252,9 @@ class CORSecurity {
     });
   }
 
-  // Create origin rate limit
-  static createOriginRateLimitStatic() {
-    import('express-rate-limit').then(({ default: rateLimit }) => {
-      return this.createOriginRateLimit();
-    });
+  // Create origin rate limit (static helper)
+  static async createOriginRateLimitStatic() {
+    return await this.createOriginRateLimit();
   }
 }
 
