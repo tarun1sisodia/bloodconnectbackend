@@ -1,6 +1,7 @@
-require('dotenv').config();
-const mongoose = require('mongoose');
-const DonationCenter = require('../models/DonationCenter');
+import dotenv from 'dotenv';
+dotenv.config();
+import mongoose from 'mongoose';
+import { DonationCenter } from '../models/DonationCenter.js';
 
 // Check if MongoDB URI is available
 const mongoURI = process.env.MONGODB_URI;

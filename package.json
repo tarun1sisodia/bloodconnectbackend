@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Backend API for BloodConnect with enhanced security",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",

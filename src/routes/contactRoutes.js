@@ -1,10 +1,10 @@
-const express = require('express');
-const contactController = require('../controllers/contactController');
-const { auth } = require('../middleware/auth');
+import express from 'express';
+import * as contactController from '../controllers/contactController.js';
+import enhancedAuth from '../middleware/authEnhanced.js';
 
 const router = express.Router();
 
 // Create a new contact message
-router.post('/', auth, contactController.createContact);
+router.post('/', enhancedAuth.authenticate.bind(enhancedAuth), contactController.createContact);
 
-module.exports = router;
+export default router;

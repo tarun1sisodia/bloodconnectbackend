@@ -1,8 +1,8 @@
-const express = require('express');
-const authController = require('../controllers/authController');
-const { registerValidation, loginValidation } = require('../middleware/validation');
-const { authLimiter } = require('../middleware/rateLimit');
-const { auth } = require('../middleware/auth');
+import express from 'express';
+import * as authController from '../controllers/authController.js';
+import { registerValidation, loginValidation } from '../middleware/validationEnhanced.js';
+import { authLimiter } from '../middleware/rateLimit.js';
+import enhancedAuth from '../middleware/authEnhanced.js';
 
 const router = express.Router();
 
@@ -16,6 +16,6 @@ router.post('/login', authLimiter, loginValidation, authController.login);
 router.post('/forgot-password', authLimiter, authController.forgotPassword);
 
 // Get current user
-router.get('/me', auth, authController.getCurrentUser);
+router.get('/me', enhancedAuth.authenticate.bind(enhancedAuth), authController.getCurrentUser);
 
-module.exports = router;
+export default router;

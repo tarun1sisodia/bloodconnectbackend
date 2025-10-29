@@ -1,6 +1,6 @@
-const Donation = require("../models/Donation");
-const Request = require("../models/Request");
-const User = require("../models/User");
+import { Donation } from "../models/Donation.js";
+import { Request } from "../models/Request.js";
+import { User } from "../models/User.js";
 
 // Record a new donation
 const createDonation = async (req, res) => {
@@ -145,7 +145,7 @@ const verifyDonation = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   createDonation,
   getUserDonations,
   getDonationById,

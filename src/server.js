@@ -1,26 +1,27 @@
-require("dotenv").config();
-const express = require("express");
-const mongoose = require("mongoose");
-const cors = require("cors");
-const path = require("path");
-const helmet = require("helmet");
+import dotenv from "dotenv";
+dotenv.config();
+import express from "express";
+import mongoose from "mongoose";
+import cors from "cors";
+import path from "path";
+import helmet from "helmet";
 
 // Import enhanced security modules
-const environmentConfig = require("./config/environment");
-const SecurityMiddleware = require("./middleware/security");
+import { environmentConfig } from "./config/environment.js";
+import SecurityMiddleware from "./middleware/security.js";
 
 // Import routes
-const authRoutes = require("./routes/authRoutes");
-const usersRoutes = require("./routes/usersRoutes");
-const requestsRoutes = require("./routes/requestsRoutes");
-const donationRoutes = require("./routes/donationRoutes");
-const matchRoutes = require("./routes/matchRoutes");
-const statsRoutes = require("./routes/statsRoutes");
-const contactRoutes = require("./routes/contactRoutes");
-const donationCenterRoutes = require("./routes/donationCenterRoutes");
+import authRoutes from "./routes/authRoutes.js";
+import usersRoutes from "./routes/usersRoutes.js";
+import requestsRoutes from "./routes/requestsRoutes.js";
+import donationRoutes from "./routes/donationRoutes.js";
+import matchRoutes from "./routes/matchRoutes.js";
+import statsRoutes from "./routes/statsRoutes.js";
+import contactRoutes from "./routes/contactRoutes.js";
+import donationCenterRoutes from "./routes/donationCenterRoutes.js";
 
 // Import middleware
-const { apiLimiter } = require("./middleware/rateLimit");
+import { apiLimiter } from "./middleware/rateLimit.js";
 
 // Initialize Express app
 const app = express();
@@ -124,4 +125,4 @@ mongoose
     process.exit(1);
   });
 
-module.exports = app;
+export default app;

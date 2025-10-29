@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+import encryptionUtils from "../utils/encryption";
+import mongoose from "mongoose";
+
 const Schema = mongoose.Schema;
 
 const requestSchema = new Schema(
@@ -10,7 +12,7 @@ const requestSchema = new Schema(
     },
     patient: {
       name: {
-        type: String,
+        type: Object,
         required: true,
       },
       age: {
@@ -30,11 +32,11 @@ const requestSchema = new Schema(
     },
     hospital: {
       name: {
-        type: String,
+        type: Object,
         required: true,
       },
       address: {
-        type: String,
+        type: Object,
         required: true,
       },
       city: {
@@ -111,6 +113,40 @@ const requestSchema = new Schema(
   },
   { timestamps: true }
 );
+
+// Encrypt sensitive fields before saving
+requestSchema.pre("save", function (next) {
+  if (this.isModified("patient.name") && this.patient.name) {
+    this.patient.name = encryptionUtils.encrypt(this.patient.name);
+  }
+  if (this.isModified("hospital.name") && this.hospital.name) {
+    this.hospital.name = encryptionUtils.encrypt(this.hospital.name);
+  }
+  if (this.isModified("hospital.address") && this.hospital.address) {
+    this.hospital.address = encryptionUtils.encrypt(this.hospital.address);
+  }
+  next();
+});
+
+// Decrypt sensitive fields after finding
+const decryptFields = (doc) => {
+  if (doc && doc.patient && doc.patient.name) {
+    doc.patient.name = encryptionUtils.decrypt(doc.patient.name);
+  }
+  if (doc && doc.hospital && doc.hospital.name) {
+    doc.hospital.name = encryptionUtils.decrypt(doc.hospital.name);
+  }
+  if (doc && doc.hospital && doc.hospital.address) {
+    doc.hospital.address = encryptionUtils.decrypt(doc.hospital.address);
+  }
+};
+
+requestSchema.post("findOne", decryptFields);
+requestSchema.post("find", (docs) => {
+  docs.forEach(decryptFields);
+});
+requestSchema.post("findOneAndUpdate", decryptFields);
+
 // Helper to compute compatible donor blood types for this request
 requestSchema.methods.getCompatibleBloodTypes = function () {
   const compatibilityChart = {
@@ -198,6 +234,4 @@ requestSchema.statics.findNearbyRequests = function (
     });
 };
 
-const Request = mongoose.model("Request", requestSchema);
-
-module.exports = Request;
+export const Request = mongoose.model("Request", requestSchema);

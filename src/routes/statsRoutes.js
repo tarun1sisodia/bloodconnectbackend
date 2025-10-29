@@ -1,9 +1,9 @@
-const express = require('express');
-const statsController = require('../controllers/statsController');
+import express from 'express';
+import * as statsController from '../controllers/statsController.js';
 
 const router = express.Router();
 
 // Get application statistics
 router.get('/', statsController.getStats);
 
-module.exports = router;
+export default router;

@@ -1,5 +1,7 @@
-const productionSecurity = require("../config/production");
-const securityLogger = require("../utils/securityLogger");
+import productionSecurity from "../config/production.js";
+import securityLogger from "../utils/securityLogger.js";
+import rateLimit from "express-rate-limit";
+import cors from "cors";
 
 // Production security middleware
 class ProductionSecurityMiddleware {
@@ -16,7 +18,6 @@ class ProductionSecurityMiddleware {
 
   // Production rate limiting
   static createProductionRateLimit() {
-    const rateLimit = require("express-rate-limit");
     const config = productionSecurity.getConfig().rateLimiting;
 
     return rateLimit({
@@ -45,7 +46,6 @@ class ProductionSecurityMiddleware {
 
   // Production CORS configuration
   static createProductionCORS() {
-    const cors = require("cors");
     const config = productionSecurity.getConfig().cors;
 
     return cors({
@@ -60,8 +60,6 @@ class ProductionSecurityMiddleware {
 
         securityLogger.logSecurityEvent("CORS_BLOCKED", {
           origin,
-          ip: req.ip,
-          userAgent: req.get("User-Agent"),
         });
 
         return callback(new Error("Not allowed by CORS policy"), false);
@@ -235,4 +233,4 @@ class ProductionSecurityMiddleware {
   }
 }
 
-module.exports = ProductionSecurityMiddleware;
+export default ProductionSecurityMiddleware;

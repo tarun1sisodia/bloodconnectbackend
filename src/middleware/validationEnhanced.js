@@ -1,5 +1,5 @@
-const { body, param, query, validationResult } = require("express-validator");
-const mongoose = require("mongoose");
+import { body, param, query, validationResult } from "express-validator";
+import mongoose from "mongoose";
 
 // Enhanced validation middleware with comprehensive security checks
 class EnhancedValidation {
@@ -436,4 +436,5 @@ class EnhancedValidation {
   ];
 }
 
-module.exports = EnhancedValidation;
+export default EnhancedValidation;
+export const { registerValidation, loginValidation } = EnhancedValidation;

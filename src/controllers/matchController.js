@@ -1,9 +1,9 @@
-const Request = require("../models/Request");
-const User = require("../models/User");
-const {
+import { Request } from "../models/Request.js";
+import { User } from "../models/User.js";
+import {
   sendDonorMatchEmail,
   sendRequesterNotificationEmail,
-} = require("../utils/emailSender");
+} from "../utils/emailSender.js";
 
 // Find matching donors for a request
 const findMatchingDonors = async (req, res) => {
@@ -131,7 +131,7 @@ const volunteerForRequest = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   findMatchingDonors,
   volunteerForRequest,
 };

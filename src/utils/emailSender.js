@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+import nodemailer from "nodemailer";
 
 // Create reusable transporter
 const transporter = nodemailer.createTransport({
@@ -148,7 +148,7 @@ const sendDonationConfirmationEmail = async (donor, donation) => {
   }
 };
 
-module.exports = {
+export {
   sendWelcomeEmail,
   sendRequestConfirmationEmail,
   sendDonorMatchEmail,
@@ -180,4 +180,4 @@ async function sendRequesterNotificationEmail(requester, donor, request) {
   }
 }
 
-module.exports.sendRequesterNotificationEmail = sendRequesterNotificationEmail;
+export { sendRequesterNotificationEmail };

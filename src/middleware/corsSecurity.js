@@ -1,5 +1,5 @@
-const cors = require("cors");
-const environmentConfig = require("../config/environment");
+import cors from "cors";
+import { environmentConfig } from "../config/environment.js";
 
 // Enhanced CORS security configuration
 class CORSecurity {
@@ -130,9 +130,8 @@ class CORSecurity {
 
   // Rate limiting for specific origins
   static createOriginRateLimit() {
-    const rateLimit = require("express-rate-limit");
-
-    return rateLimit({
+    import('express-rate-limit').then(({ default: rateLimit }) => {
+      return rateLimit({
       windowMs: 15 * 60 * 1000, // 15 minutes
       max: (req) => {
         const origin = req.get("Origin");
@@ -251,6 +250,13 @@ class CORSecurity {
       maxAge: options.maxAge || 86400,
     });
   }
+
+  // Create origin rate limit
+  static createOriginRateLimitStatic() {
+    import('express-rate-limit').then(({ default: rateLimit }) => {
+      return this.createOriginRateLimit();
+    });
+  }
 }
 
-module.exports = CORSecurity;
+export default CORSecurity;

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const donationSchema = new Schema(
@@ -116,6 +116,4 @@ donationSchema.post("save", async function (doc) {
   }
 });
 
-const Donation = mongoose.model("Donation", donationSchema);
-
-module.exports = Donation;
+export const Donation = mongoose.model("Donation", donationSchema);

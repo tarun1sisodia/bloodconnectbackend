@@ -1,5 +1,5 @@
-const crypto = require("crypto");
-const environmentConfig = require("../config/environment");
+import crypto from "crypto";
+import { environmentConfig } from "../config/environment.js";
 
 // Data encryption and protection utilities
 class EncryptionUtils {
@@ -275,4 +275,4 @@ class EncryptionUtils {
 // Create singleton instance
 const encryptionUtils = new EncryptionUtils();
 
-module.exports = encryptionUtils;
+export default encryptionUtils;

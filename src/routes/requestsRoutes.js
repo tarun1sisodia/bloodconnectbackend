@@ -1,12 +1,13 @@
-const express = require('express');
-const requestController = require('../controllers/requestController');
-const { requestValidation } = require('../middleware/validation');
-const { auth } = require('../middleware/auth');
+import express from 'express';
+import * as requestController from '../controllers/requestController.js';
+import EnhancedValidation from '../middleware/validationEnhanced.js';
+import enhancedAuth from '../middleware/authEnhanced.js';
 
+const { requestValidation } = EnhancedValidation;
 const router = express.Router();
 
 // Create a new blood request
-router.post('/', auth, requestValidation, requestController.createRequest);
+router.post('/', enhancedAuth.authenticate.bind(enhancedAuth), requestValidation, requestController.createRequest);
 
 // Get all blood requests (public)
 router.get('/', requestController.getAllRequests);
@@ -20,12 +21,12 @@ router.get('/:id', requestController.getRequestById);
 
 
 // Get requests by current user
-router.get('/user/me', auth, requestController.getMyRequests);
+router.get('/user/me', enhancedAuth.authenticate.bind(enhancedAuth), requestController.getMyRequests);
 
 // Update request
-router.put('/:id', auth, requestController.updateRequest);
+router.put('/:id', enhancedAuth.authenticate.bind(enhancedAuth), requestController.updateRequest);
 
 // Delete request
-router.delete('/:id', auth, requestController.deleteRequest);
+router.delete('/:id', enhancedAuth.authenticate.bind(enhancedAuth), requestController.deleteRequest);
 
-module.exports = router;
+export default router;

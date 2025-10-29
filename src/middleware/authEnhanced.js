@@ -1,7 +1,7 @@
-const { createClient } = require("@supabase/supabase-js");
-const User = require("../models/User");
-const environmentConfig = require("../config/environment");
-const crypto = require("crypto");
+import { createClient } from "@supabase/supabase-js";
+import { User } from "../models/User.js";
+import { environmentConfig } from "../config/environment.js";
+import crypto from "crypto";
 
 // Enhanced authentication middleware with security improvements
 class EnhancedAuth {
@@ -446,4 +446,4 @@ setInterval(() => {
   enhancedAuth.cleanupExpiredSessions();
 }, 60 * 60 * 1000);
 
-module.exports = enhancedAuth;
+export default enhancedAuth;

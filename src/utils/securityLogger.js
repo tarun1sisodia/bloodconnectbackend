@@ -1,7 +1,11 @@
-const fs = require("fs");
-const path = require("path");
-const environmentConfig = require("../config/environment");
-const encryptionUtils = require("./encryption");
+import fs from "fs";
+import path from "path";
+import { environmentConfig } from "../config/environment.js";
+import encryptionUtils from "./encryption.js";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Enhanced security logging and monitoring
 class SecurityLogger {
@@ -327,4 +331,4 @@ const securityLogger = new SecurityLogger();
 // Setup monitoring
 securityLogger.setupMonitoring();
 
-module.exports = securityLogger;
+export default securityLogger;

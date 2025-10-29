@@ -1,6 +1,6 @@
-const User = require('../models/User');
-const Request = require('../models/Request');
-const Donation = require('../models/Donation');
+import { User } from '../models/User.js';
+import { Request } from '../models/Request.js';
+import { Donation } from '../models/Donation.js';
 
 // Get application statistics
 const getStats = async (req, res) => {
@@ -50,6 +50,6 @@ const getStats = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   getStats
 };

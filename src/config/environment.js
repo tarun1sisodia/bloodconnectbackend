@@ -1,8 +1,12 @@
-const path = require("path");
-const dotenv = require("dotenv");
+import path from "path";
+import dotenv from "dotenv";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Load environment variables
-dotenv.config({ path: path.resolve(__dirname, "../../.env") });
+dotenv.config();
 
 // Environment validation and configuration
 class EnvironmentConfig {
@@ -68,7 +72,7 @@ class EnvironmentConfig {
         maxPoolSize: 10,
         serverSelectionTimeoutMS: 5000,
         socketTimeoutMS: 45000,
-        bufferMaxEntries: 0,
+        // bufferMaxEntries: 0,
         bufferCommands: false,
       },
 
@@ -219,6 +223,6 @@ class EnvironmentConfig {
 }
 
 // Create singleton instance
-const environmentConfig = new EnvironmentConfig();
+export const environmentConfig = new EnvironmentConfig();
 
-module.exports = environmentConfig;
+// export default environmentConfig;

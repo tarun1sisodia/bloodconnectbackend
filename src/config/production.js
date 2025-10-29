@@ -1,4 +1,4 @@
-const environmentConfig = require("./environment");
+import { environmentConfig } from "./environment.js";
 
 // Production security configuration
 class ProductionSecurity {
@@ -262,4 +262,4 @@ class ProductionSecurity {
 // Create singleton instance
 const productionSecurity = new ProductionSecurity();
 
-module.exports = productionSecurity;
+export default productionSecurity;

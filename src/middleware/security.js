@@ -1,7 +1,7 @@
-const rateLimit = require("express-rate-limit");
-const helmet = require("helmet");
-const { body, validationResult } = require("express-validator");
-const crypto = require("crypto");
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
+import { body, validationResult } from "express-validator";
+import crypto from "crypto";
 
 // Enhanced security middleware
 class SecurityMiddleware {
@@ -330,4 +330,4 @@ class SecurityMiddleware {
   }
 }
 
-module.exports = SecurityMiddleware;
+export default SecurityMiddleware;

@@ -1,7 +1,8 @@
-const mongoose = require('mongoose');
-const Request = require('../models/Request');
-const User = require('../models/User');
-require('dotenv').config();
+import mongoose from 'mongoose';
+import { Request } from '../models/Request.js';
+import { User } from '../models/User.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://tarun:gDkgiwfm9948Y3s8@bloodconnect.67ngkj1.mongodb.net/?retryWrites=true&w=majority&appName=bloodConnect'

@@ -1,6 +1,6 @@
-const User = require('../models/User');
-const { registerUser, loginUser, resetPassword } = require('../utils/supabase');
-const { sendWelcomeEmail } = require('../utils/emailSender');
+import { User } from '../models/User.js';
+import { registerUser, loginUser, resetPassword } from '../utils/supabase.js';
+import { sendWelcomeEmail } from '../utils/emailSender.js';
 
 // Register a new user
 const register = async (req, res) => {
@@ -133,7 +133,7 @@ const getCurrentUser = async (req, res) => {
   }
 };
 
-module.exports = {
+export {
   register,
   login,
   forgotPassword,
