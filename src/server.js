@@ -1,10 +1,7 @@
 import dotenv from "dotenv";
 dotenv.config();
 import express from "express";
-import mongoose from "mongoose";
 import cors from "cors";
-import path from "path";
-import helmet from "helmet";
 
 // Import enhanced security modules
 import { environmentConfig } from "./config/environment.js";
@@ -21,7 +18,7 @@ import contactRoutes from "./routes/contactRoutes.js";
 import donationCenterRoutes from "./routes/donationCenterRoutes.js";
 
 // Import middleware
-import { apiLimiter } from "./middleware/rateLimit.js";
+import { connectDB } from "./utils/db.js";
 
 // Initialize Express app
 const app = express();
@@ -105,17 +102,14 @@ if (process.env.NODE_ENV === "production") {
 // Enhanced error handling middleware
 app.use(SecurityMiddleware.securityErrorHandler);
 
-// Connect to MongoDB with enhanced configuration
-const dbConfig = environmentConfig.getDatabaseConfig();
-mongoose
-  .connect(dbConfig.uri, dbConfig.options)
+connectDB()
   .then(() => {
     console.log("✅ Connected to MongoDB with enhanced security");
 
     // Start server
     const PORT = environmentConfig.config.PORT;
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on port ${PORT}`);
+      console.log(`🚀 Server running on http://localhost:${PORT}`);
       console.log(`🔒 Enhanced security features enabled`);
       console.log(`🌍 Environment: ${environmentConfig.config.NODE_ENV}`);
     });

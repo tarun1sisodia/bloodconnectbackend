@@ -18,7 +18,7 @@ if (!mongoURI) {
 }
 
 // Connect to MongoDB
-mongoose.connect(mongoURI, {
+await mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -204,7 +204,7 @@ function generateAvailableSlots() {
       console.log('Cleared existing donation centers');
       
       // Insert new data
-      const result = await DonationCenter.insertMany(donationCenters);
+      const result = await DonationCenter.insertMany(donationCenters[0]);
       console.log(`Successfully seeded ${result.length} donation centers`);
       
       // Close connection
