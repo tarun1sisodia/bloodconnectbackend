@@ -22,6 +22,7 @@ const register = async (req, res) => {
     const user = new User({
       supabaseId: supabaseData.user.id,
       email,
+      password,
       name,
       bloodType,
       phone,

@@ -1,5 +1,6 @@
 import encryptionUtils from "../utils/encryption.js";
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema(
   {
@@ -14,6 +15,10 @@ const userSchema = new mongoose.Schema(
       unique: true,
       lowercase: true,
       trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
     },
     name: {
       type: String,
@@ -108,12 +113,15 @@ const userSchema = new mongoose.Schema(
 userSchema.index({ "location.coordinates": "2dsphere" });
 
 // Encrypt sensitive fields before saving
-userSchema.pre("save", function (next) {
+userSchema.pre("save", async function (next) {
   if (this.isModified("name") && this.name) {
     this.name = encryptionUtils.encrypt(this.name);
   }
   if (this.isModified("phone") && this.phone) {
     this.phone = encryptionUtils.encrypt(this.phone);
+  }
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 12);
   }
   next();
 });
@@ -133,8 +141,8 @@ userSchema.post("find", (docs) => {
   docs.forEach(decryptFields);
 });
 userSchema.post("findOneAndUpdate", decryptFields);
-
 // Method to check if user is eligible to donate
+
 userSchema.methods.isEligibleToDonate = function () {
   // If user has never donated, they are eligible
   if (!this.lastDonation) return true;
