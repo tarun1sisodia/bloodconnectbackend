@@ -1,17 +1,16 @@
-const mongoose = require('mongoose');
-require('dotenv').config({ path: './.env' });
+const { MongoMemoryServer } = require("mongodb-memory-server");
+const mongoose = require("mongoose");
 
 module.exports = async () => {
-  const mongoUri = process.env.MONGODB_URI_TEST;
-
-  if (!mongoUri) {
-    throw new Error('MONGODB_URI_TEST is not defined in .env file');
+  if (!process.env.MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined in .env file");
   }
 
-  await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  const mongod = await MongoMemoryServer.create();
+  const uri = mongod.getUri();
 
-  global.__MONGO_URI__ = mongoUri;
+  process.env.MONGODB_URI = uri;
+  global.__MONGOD__ = mongod;
+
+  await mongoose.connect(uri, { useNewUrlParser: true });
 };

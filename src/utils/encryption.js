@@ -27,7 +27,11 @@ class EncryptionUtils {
   encrypt(text) {
     try {
       const iv = crypto.randomBytes(this.ivLength);
-      const cipher = crypto.createCipher(this.algorithm, this.encryptionKey);
+      const cipher = crypto.createCipheriv(
+        this.algorithm,
+        this.encryptionKey,
+        iv
+      );
 
       let encrypted = cipher.update(text, "utf8", "hex");
       encrypted += cipher.final("hex");
@@ -48,9 +52,10 @@ class EncryptionUtils {
   // Decrypt sensitive data
   decrypt(encryptedData) {
     try {
-      const decipher = crypto.createDecipher(
+      const decipher = crypto.createDecipheriv(
         this.algorithm,
-        this.encryptionKey
+        this.encryptionKey,
+        Buffer.from(encryptedData.iv, "hex")
       );
 
       decipher.setAuthTag(Buffer.from(encryptedData.tag, "hex"));
